@@ -42,7 +42,7 @@ def main():
     """Random actions agent with Isaac Lab environment."""
     # create environment configuration
     env_cfg = parse_env_cfg(
-        args_cli.task, device=args_cli.device, num_envs=args_cli.num_envs, use_fabric=not args_cli.disable_fabric, num_agents=args_cli.num_agents,
+        args_cli.task, device=args_cli.device, num_envs=args_cli.num_envs, use_fabric=not args_cli.disable_fabric, 
     )
     # create environment
     env = gym.make(args_cli.task, cfg=env_cfg)

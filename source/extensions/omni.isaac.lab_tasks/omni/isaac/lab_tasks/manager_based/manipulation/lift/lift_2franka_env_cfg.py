@@ -37,20 +37,25 @@ class ObjectTableSceneCfg(InteractiveSceneCfg):
 
     # robots: will be populated by agent env cfg
     """ robot: ArticulationCfg = MISSING """
-    robots: list[ArticulationCfg] = MISSING
+    robot: ArticulationCfg = MISSING
+    robot_1: ArticulationCfg = MISSING
     # end-effector sensor: will be populated by agent env cfg
     """ ee_frame: FrameTransformerCfg = MISSING """
-    ee_frames: list[FrameTransformerCfg] = MISSING
+    ee_frame: FrameTransformerCfg = MISSING
+    ee_frame_1: FrameTransformerCfg = MISSING
     # target object: will be populated by agent env cfg
     # | : Union Type, object can be any form in Rigid/DeformableObject
     """ object: RigidObjectCfg | DeformableObjectCfg = MISSING """
-    objects: list[RigidObjectCfg | DeformableObjectCfg] = MISSING
+    object: RigidObjectCfg | DeformableObjectCfg = MISSING
 
     # Table
     table = AssetBaseCfg(
         prim_path="{ENV_REGEX_NS}/Table",
         init_state=AssetBaseCfg.InitialStateCfg(pos=[0.5, 0, 0], rot=[0.707, 0, 0, 0.707]),
-        spawn=UsdFileCfg(usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Mounts/SeattleLabTable/table_instanceable.usd"),
+        spawn=UsdFileCfg(
+            usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Mounts/SeattleLabTable/table_instanceable.usd",
+            scale=(2.0, 2.0, 0.8)
+            ),
     )
 
     # plane
@@ -93,7 +98,9 @@ class ActionsCfg:
 
     # will be set by agent env cfg
     arm_action: mdp.JointPositionActionCfg | mdp.DifferentialInverseKinematicsActionCfg = MISSING
+    arm_action_1: mdp.JointPositionActionCfg | mdp.DifferentialInverseKinematicsActionCfg = MISSING
     gripper_action: mdp.BinaryJointPositionActionCfg = MISSING
+    gripper_action_1: mdp.BinaryJointPositionActionCfg = MISSING
 
 
 @configclass

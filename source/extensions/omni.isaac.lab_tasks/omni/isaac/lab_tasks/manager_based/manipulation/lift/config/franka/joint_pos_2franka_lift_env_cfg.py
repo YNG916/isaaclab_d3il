@@ -2,9 +2,9 @@
 # All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
-
 import omni.isaac.lab.sim as sim_utils
 from omni.isaac.lab.assets import RigidObjectCfg
+from omni.isaac.lab.assets import ArticulationCfg
 from omni.isaac.lab.sensors import FrameTransformerCfg
 from omni.isaac.lab.sensors.frame_transformer.frame_transformer_cfg import OffsetCfg
 from omni.isaac.lab.sim.schemas.schemas_cfg import RigidBodyPropertiesCfg
@@ -30,30 +30,45 @@ class TwoFrankaCubeEnvCfg(TwoFrankaEnvCfg):
 
         # Set Franka as robot
         # self.scene.robot = FRANKA_PANDA_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
-        self.scene.robots = [
-            FRANKA_PANDA_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot_0"),
-            FRANKA_PANDA_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot_1"),
-        ]
+        self.scene.robot = FRANKA_PANDA_CFG.replace(
+            prim_path="{ENV_REGEX_NS}/Robot",
+            init_state=ArticulationCfg.InitialStateCfg(
+                pos=(-0.7, 0.0, 0.0),  # Set different initial position
+                rot=(1.0, 0.0, 0.0, 0.0),  # Identity rotation
+            )
+        )
+        self.scene.robot_1 = FRANKA_PANDA_CFG.replace(
+            prim_path="{ENV_REGEX_NS}/Robot_1",
+            init_state=ArticulationCfg.InitialStateCfg(
+                pos=(0.9, 0.0, 0.0),  # Set different initial position
+                rot=(0.0, 0.0, 0.0, 1.0),  # Identity rotation
+            )
+        )
+        # self.scene.robots = [
+        #     FRANKA_PANDA_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot_0"),
+        #     FRANKA_PANDA_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot_1"),
+        # ]
+
 
         # Set actions for the specific robot type (franka)
         """ self.actions.arm_action = mdp.JointPositionActionCfg(
             asset_name="robot", joint_names=["panda_joint.*"], scale=0.5, use_default_offset=True
         ) """
 
-        self.actions.arm_action = [
-            mdp.JointPositionActionCfg(
-                asset_name="robot_0",
+        self.actions.arm_action = mdp.JointPositionActionCfg(
+                asset_name="robot",
                 joint_names=["panda_joint.*"],
                 scale=0.5,
                 use_default_offset=True
-            ),
-            mdp.JointPositionActionCfg(
+            )
+        
+        self.actions.arm_action_1 = mdp.JointPositionActionCfg(
                 asset_name="robot_1",
                 joint_names=["panda_joint.*"],
                 scale=0.5,
                 use_default_offset=True
             )
-        ]
+        
 
         """ self.actions.gripper_action = mdp.BinaryJointPositionActionCfg(
             asset_name="robot",
@@ -64,22 +79,22 @@ class TwoFrankaCubeEnvCfg(TwoFrankaEnvCfg):
         # Set the body name for the end effector
         self.commands.object_pose.body_name = "panda_hand" """
 
-        self.actions.gripper_action = [
-            mdp.BinaryJointPositionActionCfg(
-                asset_name="robot_0",
+        self.actions.gripper_action = mdp.BinaryJointPositionActionCfg(
+                asset_name="robot",
                 joint_names=["panda_finger.*"],
                 open_command_expr={"panda_finger_.*": 0.04},
                 close_command_expr={"panda_finger_.*": 0.0}
-            ),
-            mdp.BinaryJointPositionActionCfg(
+            )
+        
+        self.actions.gripper_action_1 = mdp.BinaryJointPositionActionCfg(
                 asset_name="robot_1",
                 joint_names=["panda_finger.*"],
                 open_command_expr={"panda_finger_.*": 0.04},
                 close_command_expr={"panda_finger_.*": 0.0}
             )
-        ]
+    
 
-        self.commands.object_pose.body_names = ["panda_hand_0", "panda_hand_1"]
+        self.commands.object_pose.body_name = ["panda_hand"]
 
         # Rigid body properties of each cube
         cube_properties = RigidBodyPropertiesCfg(
@@ -92,57 +107,80 @@ class TwoFrankaCubeEnvCfg(TwoFrankaEnvCfg):
         )
 
         # Set 3 Cubes as object  
+        # self.scene.object = RigidObjectCfg(
+        #     prim_path="{ENV_REGEX_NS}/Object1",
+        #     init_state=RigidObjectCfg.InitialStateCfg(pos=[0.5, 0, 0.055], rot=[1, 0, 0, 0]),
+        #     spawn=UsdFileCfg(
+        #         usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Blocks/DexCube/dex_cube_instanceable.usd",
+        #         scale=(0.8, 0.8, 0.8),
+        #         rigid_props=cube_properties
+        #     ),
+        # )
+
+        # self.scene.object2 = RigidObjectCfg(
+        #     prim_path="{ENV_REGEX_NS}/Object2",
+        #     init_state=RigidObjectCfg.InitialStateCfg(pos=[0.7, 0, 0.055], rot=[1, 0, 0, 0]),
+        #     spawn=UsdFileCfg(
+        #         usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Blocks/DexCube/dex_cube_instanceable.usd",
+        #         scale=(0.8, 0.8, 0.8),
+        #         rigid_props=cube_properties
+        #     ),
+        # )
+
+    #     self.scene.object3 = AssetBaseCfg(
+    #         prim_path="{ENV_REGEX_NS}/Pan",
+    #         init_state=AssetBaseCfg.InitialStateCfg(pos=[0.5, 2, 2], rot=[0.707, 0, 0, 0.707]),
+    #         spawn=UsdFileCfg(
+    #         usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/Bowl/Bowl.usd",
+    #         ),
+    # )
+
         self.scene.object = RigidObjectCfg(
-            prim_path="{ENV_REGEX_NS}/Object1",
-            init_state=RigidObjectCfg.InitialStateCfg(pos=[0.5, 0, 0.055], rot=[1, 0, 0, 0]),
+            prim_path="{ENV_REGEX_NS}/Object",
+            init_state=RigidObjectCfg.InitialStateCfg(pos=[0.0, 0.00, 0.0], rot=[1, 0, 0, 0]),
             spawn=UsdFileCfg(
-                usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Blocks/DexCube/dex_cube_instanceable.usd",
-                scale=(0.8, 0.8, 0.8),
-                rigid_props=cube_properties
+                usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/Bowl/Bowl.usd",
+                rigid_props=cube_properties,
+                collision_props=sim_utils.CollisionPropertiesCfg(
+                    collision_enabled=True,)
             ),
         )
 
-        self.scene.object2 = RigidObjectCfg(
-            prim_path="{ENV_REGEX_NS}/Object2",
-            init_state=RigidObjectCfg.InitialStateCfg(pos=[0.7, 0, 0.055], rot=[1, 0, 0, 0]),
+        self.scene.object4 = RigidObjectCfg(
+            prim_path="{ENV_REGEX_NS}/Object4",
+            init_state=RigidObjectCfg.InitialStateCfg(pos=[0.3, 0.00, 0.0], rot=[1, 0, 0, 0]),
             spawn=UsdFileCfg(
-                usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Blocks/DexCube/dex_cube_instanceable.usd",
-                scale=(0.8, 0.8, 0.8),
-                rigid_props=cube_properties
+                usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/Spoon/Spoon.usd",
+                rigid_props=cube_properties,
+                collision_props=sim_utils.CollisionPropertiesCfg(
+                    collision_enabled=True,)
             ),
         )
 
-        self.scene.object3 = RigidObjectCfg(
-            prim_path="{ENV_REGEX_NS}/Object3",
-            init_state=RigidObjectCfg.InitialStateCfg(pos=[0.5, 0.2, 0.055], rot=[1, 0, 0, 0]),
-            spawn=UsdFileCfg(
-                usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Blocks/DexCube/dex_cube_instanceable.usd",
-                scale=(0.8, 0.8, 0.8),
-                rigid_props=cube_properties
-            ),
-        )
+        
 
         # Set Cube as destination  
         # Class UsdFileCfg, spawning an asset from a USD file
         # Class CollisionPropertiesCfg, collision_enabled: Whether to enable or disable collisions. 
-        self.scene.cube_Goal = RigidObjectCfg(
-            prim_path="{ENV_REGEX_NS}/Cube_Goal",
-            init_state=RigidObjectCfg.InitialStateCfg(pos=[0.4, 0.0, 0.0203], rot=[1, 0, 0, 0]),
-            spawn=UsdFileCfg(
-                usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Blocks/blue_block.usd",
-                scale=(2.0, 2.0, 0.1),
-                rigid_props=cube_properties,
-                collision_props=sim_utils.CollisionPropertiesCfg(
-                    collision_enabled=None,),
-                #collision_enabled=False,
-            ),
-        )
+        # self.scene.cube_Goal = RigidObjectCfg(
+        #     prim_path="{ENV_REGEX_NS}/Cube_Goal",
+        #     init_state=RigidObjectCfg.InitialStateCfg(pos=[0.4, 0.0, 0.0203], rot=[1, 0, 0, 0]),
+        #     spawn=UsdFileCfg(
+        #         usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Blocks/blue_block.usd",
+        #         scale=(2.0, 2.0, 0.1),
+        #         rigid_props=cube_properties,
+        #         collision_props=sim_utils.CollisionPropertiesCfg(
+        #             collision_enabled=None,),
+        #         #collision_enabled=False,
+        #     ),
+        # )
 
 
         # Listens to the required transforms
-        """  marker_cfg = FRAME_MARKER_CFG.copy()
+        marker_cfg = FRAME_MARKER_CFG.copy()
         marker_cfg.markers["frame"].scale = (0.1, 0.1, 0.1)
         marker_cfg.prim_path = "/Visuals/FrameTransformer"
+
         self.scene.ee_frame = FrameTransformerCfg(
             prim_path="{ENV_REGEX_NS}/Robot/panda_link0",
             debug_vis=False,
@@ -156,37 +194,52 @@ class TwoFrankaCubeEnvCfg(TwoFrankaEnvCfg):
                     ),
                 ),
             ],
-        ) """
-        self.scene.ee_frames = [
-    FrameTransformerCfg(
-        prim_path="{ENV_REGEX_NS}/Robot_0/panda_link0",
-        debug_vis=False,
-        visualizer_cfg=marker_cfg,
-        target_frames=[
-            FrameTransformerCfg.FrameCfg(
-                prim_path="{ENV_REGEX_NS}/Robot_0/panda_hand",
-                name="end_effector_0",
-                offset=OffsetCfg(
-                    pos=[0.0, 0.0, 0.1034],
+        ) 
+        self.scene.ee_frame_1 = FrameTransformerCfg(
+            prim_path="{ENV_REGEX_NS}/Robot_1/panda_link0",
+            debug_vis=False,
+            visualizer_cfg=marker_cfg,
+            target_frames=[
+                FrameTransformerCfg.FrameCfg(
+                    prim_path="{ENV_REGEX_NS}/Robot_1/panda_hand",
+                    name="end_effector_1",
+                    offset=OffsetCfg(
+                        pos=[0.0, 0.0, 0.1034],
+                    ),
                 ),
-            ),
-        ],
-    ),
-    FrameTransformerCfg(
-        prim_path="{ENV_REGEX_NS}/Robot_1/panda_link0",
-        debug_vis=False,
-        visualizer_cfg=marker_cfg,
-        target_frames=[
-            FrameTransformerCfg.FrameCfg(
-                prim_path="{ENV_REGEX_NS}/Robot_1/panda_hand",
-                name="end_effector_1",
-                offset=OffsetCfg(
-                    pos=[0.0, 0.0, 0.1034],
-                ),
-            ),
-        ],
-    ),
-]
+            ],
+        )
+        
+#         self.scene.ee_frames = [
+#     FrameTransformerCfg(
+#         prim_path="{ENV_REGEX_NS}/Robot_0/panda_link0",
+#         debug_vis=False,
+#         visualizer_cfg=marker_cfg,
+#         target_frames=[
+#             FrameTransformerCfg.FrameCfg(
+#                 prim_path="{ENV_REGEX_NS}/Robot_0/panda_hand",
+#                 name="end_effector_0",
+#                 offset=OffsetCfg(
+#                     pos=[0.0, 0.0, 0.1034],
+#                 ),
+#             ),
+#         ],
+#     ),
+#     FrameTransformerCfg(
+#         prim_path="{ENV_REGEX_NS}/Robot_1/panda_link0",
+#         debug_vis=False,
+#         visualizer_cfg=marker_cfg,
+#         target_frames=[
+#             FrameTransformerCfg.FrameCfg(
+#                 prim_path="{ENV_REGEX_NS}/Robot_1/panda_hand",
+#                 name="end_effector_1",
+#                 offset=OffsetCfg(
+#                     pos=[0.0, 0.0, 0.1034],
+#                 ),
+#             ),
+#         ],
+#     ),
+# ]
 
 
 
