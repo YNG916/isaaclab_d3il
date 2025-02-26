@@ -8,7 +8,7 @@ from omni.isaac.lab.envs.mdp.actions.actions_cfg import DifferentialInverseKinem
 from omni.isaac.lab.utils import configclass
 
 #from . import joint_pos_env_cfg
-from . import joint_pos_Lift_change_to_Stack_env_cfg
+from . import parallel_env
 
 ##
 # Pre-defined configs
@@ -17,7 +17,7 @@ from omni.isaac.lab_assets.franka import FRANKA_PANDA_HIGH_PD_CFG  # isort: skip
 
 
 @configclass
-class FrankaCubeLiftStackIKEnvCfg(joint_pos_Lift_change_to_Stack_env_cfg.FrankaCubeStackEnvCfg):
+class ParallelFrankaIKEnvCfg(parallel_env.ParallelFrankaEnvCfg):
     def __post_init__(self):
         # post init of parent
         super().__post_init__()
@@ -38,7 +38,7 @@ class FrankaCubeLiftStackIKEnvCfg(joint_pos_Lift_change_to_Stack_env_cfg.FrankaC
 
 
 @configclass
-class FrankaCubeLiftStackIKEnvCfg_PLAY(FrankaCubeLiftStackIKEnvCfg):
+class ParallelFrankaIKEnvCfg_PLAY(ParallelFrankaIKEnvCfg):
     def __post_init__(self):
         # post init of parent
         super().__post_init__()
