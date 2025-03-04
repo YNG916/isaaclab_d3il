@@ -15,6 +15,7 @@ from omni.isaac.lab.utils.assets import ISAAC_NUCLEUS_DIR
 from omni.isaac.lab_tasks.manager_based.manipulation.lift import mdp
 from omni.isaac.lab_tasks.manager_based.manipulation.lift.lift_change_to_stack_env_cfg import ToStackEnvCfg
 
+
 ##
 # Pre-defined configs
 ##
@@ -85,16 +86,7 @@ class FrankaCubeStackEnvCfg(ToStackEnvCfg):
             ),
         )
 
-        self.scene.object4 = RigidObjectCfg(
-            prim_path="{ENV_REGEX_NS}/Object4",
-            init_state=RigidObjectCfg.InitialStateCfg(pos=[0.3, 0.00, 0.0], rot=[1, 0, 0, 0]),
-            spawn=UsdFileCfg(
-                usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/Bowl/Bowl.usd",
-                rigid_props=cube_properties,
-                collision_props=sim_utils.CollisionPropertiesCfg(
-                    collision_enabled=True,)
-            ),
-        )
+       
 
         # Set Cube as destination  
         # Class UsdFileCfg, spawning an asset from a USD file

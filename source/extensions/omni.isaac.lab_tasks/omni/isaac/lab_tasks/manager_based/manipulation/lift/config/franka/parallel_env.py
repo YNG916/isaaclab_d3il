@@ -33,7 +33,7 @@ class ParallelFrankaEnvCfg(ParallelEnvCfg):
         self.scene.robot = FRANKA_PANDA_CFG.replace(
             prim_path="{ENV_REGEX_NS}/Robot",
             init_state=ArticulationCfg.InitialStateCfg(
-                pos=(-0.7, -0.5, 0.0),  # Set different initial position
+                pos=(-0.9, -0.5, 0.0),  # Set different initial position
                 rot=(1.0, 0.0, 0.0, 0.0),  # Identity rotation
                 joint_pos={
                     "panda_joint1": 0.0,
@@ -142,10 +142,10 @@ class ParallelFrankaEnvCfg(ParallelEnvCfg):
 
 
         self.scene.object = RigidObjectCfg(
-            prim_path="{ENV_REGEX_NS}/Bowl",
-            init_state=RigidObjectCfg.InitialStateCfg(pos=[0.0, 0.00, 0.0], rot=[1, 0, 0, 0]),
+            prim_path="{ENV_REGEX_NS}/SaltShaker",
+            init_state=RigidObjectCfg.InitialStateCfg(pos=[0.0, 0.0, 0.0], rot=[1, 0, 0, 0]),
             spawn=UsdFileCfg(
-                usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/Bowl/Bowl.usd",
+                usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/SaltShaker/SaltShaker.usd",
                 rigid_props=cube_properties,
                 collision_props=sim_utils.CollisionPropertiesCfg(
                     collision_enabled=True,)
@@ -153,10 +153,21 @@ class ParallelFrankaEnvCfg(ParallelEnvCfg):
         )
 
         self.scene.object_2 = RigidObjectCfg(
-            prim_path="{ENV_REGEX_NS}/Pan",
+            prim_path="{ENV_REGEX_NS}/Spoon",
             init_state=RigidObjectCfg.InitialStateCfg(pos=[0.5, 0.5, 0.0], rot=[1, 0, 0, 0]),
             spawn=UsdFileCfg(
-                usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/Pan/Pann.usd",
+                usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/Spoon/Spoon.usd",
+                rigid_props=cube_properties,
+                collision_props=sim_utils.CollisionPropertiesCfg(
+                    collision_enabled=True,)
+            ),
+        )
+
+        self.scene.object_3 = RigidObjectCfg(
+            prim_path="{ENV_REGEX_NS}/Bowl",
+            init_state=RigidObjectCfg.InitialStateCfg(pos=[0.5, 0.5, 0.0], rot=[1, 0, 0, 0]),
+            spawn=UsdFileCfg(
+                usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/Bowl/Bowl.usd",
                 rigid_props=cube_properties,
                 collision_props=sim_utils.CollisionPropertiesCfg(
                     collision_enabled=True,)

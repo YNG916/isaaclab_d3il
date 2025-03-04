@@ -14,6 +14,21 @@ from . import agents
 ##
 # Joint Position Control
 ##
+
+# Two Franka Stack
+gym.register(
+    id="Isaac-TwoFranka-v0",
+    entry_point="omni.isaac.lab.envs:ManagerBasedRLEnv",
+    kwargs={
+        "env_cfg_entry_point": f"{__name__}.joint_pos_2franka_lift_env_cfg:TwoFrankaCubeEnvCfg_PLAY",
+        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:LiftCubePPORunnerCfg",
+        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
+        "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_ppo_cfg.yaml",
+        "sb3_cfg_entry_point": f"{agents.__name__}:sb3_ppo_cfg.yaml",
+    },
+    disable_env_checker=True,
+)
+
 gym.register(
     id="Isaac-Parallel-Franka-v0",
     entry_point="omni.isaac.lab.envs:ManagerBasedRLEnv",
@@ -27,9 +42,21 @@ gym.register(
     disable_env_checker=True,
 )
 
+gym.register(
+    id="Isaac-Sorting-Franka-v0",
+    entry_point="omni.isaac.lab.envs:ManagerBasedRLEnv",
+    kwargs={
+        "env_cfg_entry_point": f"{__name__}.sorting_env:FrankaSortingBasicEnvCfg_PLAY",
+        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:LiftCubePPORunnerCfg",
+        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
+        "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_ppo_cfg.yaml",
+        "sb3_cfg_entry_point": f"{agents.__name__}:sb3_ppo_cfg.yaml",
+    },
+    disable_env_checker=True,
+)
 
 gym.register(
-    id="Isaac-Stack-Objects-to-Goal-Franka-v0",
+    id="Isaac-Stack-Franka-v0",
     entry_point="omni.isaac.lab.envs:ManagerBasedRLEnv",
     kwargs={
         "env_cfg_entry_point": f"{__name__}.joint_pos_Lift_change_to_Stack_env_cfg:FrankaCubeStackEnvCfg_PLAY",
@@ -67,19 +94,7 @@ gym.register(
     disable_env_checker=True,
 )
 
-# Two Franka Stack
-gym.register(
-    id="Isaac-Stack-Cube-TwoFranka-v0",
-    entry_point="omni.isaac.lab.envs:ManagerBasedRLEnv",
-    kwargs={
-        "env_cfg_entry_point": f"{__name__}.joint_pos_2franka_lift_env_cfg:TwoFrankaCubeEnvCfg_PLAY",
-        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:LiftCubePPORunnerCfg",
-        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
-        "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_ppo_cfg.yaml",
-        "sb3_cfg_entry_point": f"{agents.__name__}:sb3_ppo_cfg.yaml",
-    },
-    disable_env_checker=True,
-)
+
 
 
 
@@ -135,6 +150,16 @@ gym.register(
     entry_point="omni.isaac.lab.envs:ManagerBasedRLEnv",
     kwargs={
         "env_cfg_entry_point": f"{__name__}.ik_parallel_env:ParallelFrankaIKEnvCfg",
+        "robomimic_bc_cfg_entry_point": os.path.join(agents.__path__[0], "robomimic/bc.json"),
+    },
+    disable_env_checker=True,
+)
+
+gym.register(
+    id="Isaac-Sorting-Franka-IK-Rel-v0",
+    entry_point="omni.isaac.lab.envs:ManagerBasedRLEnv",
+    kwargs={
+        "env_cfg_entry_point": f"{__name__}.ik_sorting_env:FrankaSortingBasicIKEnvCfg",
         "robomimic_bc_cfg_entry_point": os.path.join(agents.__path__[0], "robomimic/bc.json"),
     },
     disable_env_checker=True,

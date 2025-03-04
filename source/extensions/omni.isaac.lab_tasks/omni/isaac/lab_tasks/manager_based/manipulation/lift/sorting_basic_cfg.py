@@ -36,46 +36,40 @@ class ObjectTableSceneCfg(InteractiveSceneCfg):
     """
 
     # robots: will be populated by agent env cfg
-    """ robot: ArticulationCfg = MISSING """
     robot: ArticulationCfg = MISSING
-    robot_1: ArticulationCfg = MISSING
     # end-effector sensor: will be populated by agent env cfg
-    """ ee_frame: FrameTransformerCfg = MISSING """
     ee_frame: FrameTransformerCfg = MISSING
-    ee_frame_1: FrameTransformerCfg = MISSING
     # target object: will be populated by agent env cfg
     # | : Union Type, object can be any form in Rigid/DeformableObject
-    """ object: RigidObjectCfg | DeformableObjectCfg = MISSING """
     object: RigidObjectCfg | DeformableObjectCfg = MISSING
+    """object_2: RigidObjectCfg | DeformableObjectCfg = MISSING
+    object_3: RigidObjectCfg | DeformableObjectCfg = MISSING
+    Cube_Goal: RigidObjectCfg = MISSING"""
+
 
     # Table
     # table = AssetBaseCfg(
     #     prim_path="{ENV_REGEX_NS}/Table",
     #     init_state=AssetBaseCfg.InitialStateCfg(pos=[0.5, 0, 0], rot=[0.707, 0, 0, 0.707]),
-    #     spawn=UsdFileCfg(
-    #         usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Mounts/SeattleLabTable/table_instanceable.usd",
-    #         scale=(2.0, 2.0, 2.0),
-    #         )
-    # )
-    
-    table = AssetBaseCfg(
-        prim_path="{ENV_REGEX_NS}/Table",
-        init_state=AssetBaseCfg.InitialStateCfg(pos=[0, 0, -1], rot=[0.707, 0, 0, 0.707]),
-        spawn=UsdFileCfg(
-            usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/KitchenTable/KitchenTable.usd",
-            scale=(0.02, 0.02, 0.013),
-            )
-    )
-    
-    # plane = AssetBaseCfg(
-    #     prim_path="{ENV_REGEX_NS}/Plane",
-    #     #init_state=AssetBaseCfg.InitialStateCfg(pos=[0.5, 0, 0], rot=[0.707, 0, 0, 0.707]),
-    #     spawn=UsdFileCfg(
-    #         usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/Kitchen/Kitchen.usd",
-    #         scale=(1.0, 1.0, 0.8)
-    #         ),
+    #     spawn=UsdFileCfg(usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Mounts/SeattleLabTable/table_instanceable.usd",
+    #     # scale=(2.0, 2.0, 2.0)
+    #     ),
+        
     # )
 
+    table = AssetBaseCfg(
+        prim_path="{ENV_REGEX_NS}/Table",
+        init_state=AssetBaseCfg.InitialStateCfg(pos=[0, 0, -1.1], rot=[0.707, 0, 0, 0.707]),
+        spawn=UsdFileCfg(
+            usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/KitchenTable/KitchenTable.usd",
+            scale=(0.015, 0.015, 0.013),
+            rigid_props=sim_utils.RigidBodyPropertiesCfg(
+            disable_gravity=True,
+        ),
+            )
+    )
+
+    # plane
     plane = AssetBaseCfg(
         prim_path="/World/GroundPlane",
         init_state=AssetBaseCfg.InitialStateCfg(pos=[0, 0, -1.05]),
@@ -115,9 +109,7 @@ class ActionsCfg:
 
     # will be set by agent env cfg
     arm_action: mdp.JointPositionActionCfg | mdp.DifferentialInverseKinematicsActionCfg = MISSING
-    arm_action_1: mdp.JointPositionActionCfg | mdp.DifferentialInverseKinematicsActionCfg = MISSING
     gripper_action: mdp.BinaryJointPositionActionCfg = MISSING
-    gripper_action_1: mdp.BinaryJointPositionActionCfg = MISSING
 
 
 @configclass
@@ -148,17 +140,17 @@ class EventCfg:
 
     reset_all = EventTerm(func=mdp.reset_scene_to_default, mode="reset")
 
-    """reset_object_position = EventTerm(
-        func=mdp.reset_root_state_uniform,
-        mode="reset",
-        params={
-            "pose_range": {"x": (-0.1, 0.1), "y": (-0.25, 0.25), "z": (0.0, 0.0)},
-            "velocity_range": {},
-            "asset_cfg": SceneEntityCfg("object", body_names="Object"),
-        },
-    )
+    # reset_object_position = EventTerm(
+    #     func=mdp.reset_root_state_uniform,
+    #     mode="reset",
+    #     params={
+    #         "pose_range": {"x": (-0.1, 0.1), "y": (-0.25, 0.25), "z": (0.0, 0.0)},
+    #         "velocity_range": {},
+    #         "asset_cfg": SceneEntityCfg("object", body_names="Object"),
+    #     },
+    # )
 
-    """
+    
 
 @configclass
 class RewardsCfg:
@@ -220,7 +212,7 @@ class CurriculumCfg:
 
 
 @configclass
-class ParallelEnvCfg(ManagerBasedRLEnvCfg):
+class SortingBasicEnvCfg(ManagerBasedRLEnvCfg):
     """Configuration for the lifting environment."""
 
     # Scene settings

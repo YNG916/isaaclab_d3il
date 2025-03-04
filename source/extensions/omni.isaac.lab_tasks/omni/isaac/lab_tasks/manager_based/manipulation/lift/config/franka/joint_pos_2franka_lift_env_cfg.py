@@ -33,8 +33,18 @@ class TwoFrankaCubeEnvCfg(TwoFrankaEnvCfg):
         self.scene.robot = FRANKA_PANDA_CFG.replace(
             prim_path="{ENV_REGEX_NS}/Robot",
             init_state=ArticulationCfg.InitialStateCfg(
-                pos=(-0.7, 0.0, 0.0),  # Set different initial position
-                rot=(1.0, 0.0, 0.0, 0.0),  # Identity rotation
+                pos=(-0.9, 0.0, 0.0),  # Set different initial position
+                rot=(1.0, 0.0, 0.0, 0.0),  # Identity rotatio
+                joint_pos={
+                    "panda_joint1": 0.0,
+                    "panda_joint2": -0.569,
+                    "panda_joint3": 0.0,
+                    "panda_joint4": -2.810,
+                    "panda_joint5": 0.0,
+                    "panda_joint6": 3.037,
+                    "panda_joint7": 0.741,
+                    "panda_finger_joint.*": 0.04,
+                },
             )
         )
         self.scene.robot_1 = FRANKA_PANDA_CFG.replace(
@@ -42,6 +52,16 @@ class TwoFrankaCubeEnvCfg(TwoFrankaEnvCfg):
             init_state=ArticulationCfg.InitialStateCfg(
                 pos=(0.9, 0.0, 0.0),  # Set different initial position
                 rot=(0.0, 0.0, 0.0, 1.0),  # Identity rotation
+                joint_pos={
+                    "panda_joint1": 0.0,
+                    "panda_joint2": -0.569,
+                    "panda_joint3": 0.0,
+                    "panda_joint4": -2.810,
+                    "panda_joint5": 0.0,
+                    "panda_joint6": 3.037,
+                    "panda_joint7": 0.741,
+                    "panda_finger_joint.*": 0.04,
+                },
             )
         )
         # self.scene.robots = [
@@ -106,51 +126,23 @@ class TwoFrankaCubeEnvCfg(TwoFrankaEnvCfg):
             disable_gravity=False,
         )
 
-        # Set 3 Cubes as object  
-        # self.scene.object = RigidObjectCfg(
-        #     prim_path="{ENV_REGEX_NS}/Object1",
-        #     init_state=RigidObjectCfg.InitialStateCfg(pos=[0.5, 0, 0.055], rot=[1, 0, 0, 0]),
-        #     spawn=UsdFileCfg(
-        #         usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Blocks/DexCube/dex_cube_instanceable.usd",
-        #         scale=(0.8, 0.8, 0.8),
-        #         rigid_props=cube_properties
-        #     ),
-        # )
-
-        # self.scene.object2 = RigidObjectCfg(
-        #     prim_path="{ENV_REGEX_NS}/Object2",
-        #     init_state=RigidObjectCfg.InitialStateCfg(pos=[0.7, 0, 0.055], rot=[1, 0, 0, 0]),
-        #     spawn=UsdFileCfg(
-        #         usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Blocks/DexCube/dex_cube_instanceable.usd",
-        #         scale=(0.8, 0.8, 0.8),
-        #         rigid_props=cube_properties
-        #     ),
-        # )
-
-    #     self.scene.object3 = AssetBaseCfg(
-    #         prim_path="{ENV_REGEX_NS}/Pan",
-    #         init_state=AssetBaseCfg.InitialStateCfg(pos=[0.5, 2, 2], rot=[0.707, 0, 0, 0.707]),
-    #         spawn=UsdFileCfg(
-    #         usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/Bowl/Bowl.usd",
-    #         ),
-    # )
 
         self.scene.object = RigidObjectCfg(
             prim_path="{ENV_REGEX_NS}/Object",
             init_state=RigidObjectCfg.InitialStateCfg(pos=[0.0, 0.00, 0.0], rot=[1, 0, 0, 0]),
             spawn=UsdFileCfg(
-                usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/Bowl/Bowl.usd",
+                usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/BottleB/BottleB.usd",
                 rigid_props=cube_properties,
                 collision_props=sim_utils.CollisionPropertiesCfg(
                     collision_enabled=True,)
             ),
         )
 
-        self.scene.object4 = RigidObjectCfg(
-            prim_path="{ENV_REGEX_NS}/Object4",
+        self.scene.object2 = RigidObjectCfg(
+            prim_path="{ENV_REGEX_NS}/Object2",
             init_state=RigidObjectCfg.InitialStateCfg(pos=[0.3, 0.00, 0.0], rot=[1, 0, 0, 0]),
             spawn=UsdFileCfg(
-                usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/Spoon/Spoon.usd",
+                usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/BottleB/BottleB.usd",
                 rigid_props=cube_properties,
                 collision_props=sim_utils.CollisionPropertiesCfg(
                     collision_enabled=True,)
