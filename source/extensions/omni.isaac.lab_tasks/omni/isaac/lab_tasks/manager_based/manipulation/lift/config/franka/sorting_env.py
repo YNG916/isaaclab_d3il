@@ -222,12 +222,37 @@ class FrankaSortingBasicEnvCfg(SortingBasicEnvCfg):
             ),
         )
 
+        # self.scene.cube_Goal = RigidObjectCfg(
+        #     prim_path="{ENV_REGEX_NS}/Cube_Goal",
+        #     init_state=RigidObjectCfg.InitialStateCfg(pos=[0.2, 0.5, 0.0], rot=[1, 0, 0, 0]),
+        #     spawn=UsdFileCfg(
+        #         usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/SoapDish/SoapDish_payload.usd",
+        #         rigid_props=cube_properties,
+        #         collision_props=sim_utils.CollisionPropertiesCfg(
+        #             collision_enabled=True,),
+        #         #collision_enabled=False,
+        #     ),
+        # )
+        
+        # self.scene.cube_Goal_2 = RigidObjectCfg(
+        #     prim_path="{ENV_REGEX_NS}/Cube_Goal_2",
+        #     init_state=RigidObjectCfg.InitialStateCfg(pos=[0.2, -0.5, 0.0], rot=[1, 0, 0, 0]),
+        #     spawn=UsdFileCfg(
+        #         usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/SoapDish/SoapDish_payload.usd",
+        #         rigid_props=cube_properties,
+        #         collision_props=sim_utils.CollisionPropertiesCfg(
+        #             collision_enabled=True,),
+        #         #collision_enabled=False,
+        #     ),
+        # )
+
+
             # boxes for sorting
         # self.scene.box_1 = RigidObjectCfg(
         #         prim_path="{ENV_REGEX_NS}/Box",
-        #         init_state=RigidObjectCfg.InitialStateCfg(pos=[0.2, 0, 0.0], rot=[1, 0, 0, 0]),
+        #         init_state=RigidObjectCfg.InitialStateCfg(pos=[0.3, 0, 0.0], rot=[1, 0, 0, 0]),
         #         spawn=UsdFileCfg(
-        #             usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/BottleB/BottleB.usd",
+        #             usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/PaperBagCrumpled/PaperBagCrumpled.usd",
         #             rigid_props=cube_properties,
         #             collision_props=sim_utils.CollisionPropertiesCfg(
         #                 collision_enabled=True,)
@@ -236,9 +261,9 @@ class FrankaSortingBasicEnvCfg(SortingBasicEnvCfg):
 
         # self.scene.box_2 = RigidObjectCfg(
         #     prim_path="{ENV_REGEX_NS}/Box_2",
-        #     init_state=RigidObjectCfg.InitialStateCfg(pos=[0.5, -0.5, 0.0], rot=[1, 0, 0, 0]),
+        #     init_state=RigidObjectCfg.InitialStateCfg(pos=[0.2, 0, 0.0], rot=[1, 0, 0, 0]),
         #     spawn=UsdFileCfg(
-        #         usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/Plate/Plate.usd",
+        #         usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/Spoon/Spoon.usd",
         #         rigid_props=cube_properties,
         #         collision_props=sim_utils.CollisionPropertiesCfg(
         #             collision_enabled=True,)

@@ -60,7 +60,7 @@ class ObjectTableSceneCfg(InteractiveSceneCfg):
     
     table = AssetBaseCfg(
         prim_path="{ENV_REGEX_NS}/Table",
-        init_state=AssetBaseCfg.InitialStateCfg(pos=[0, 0, -1], rot=[0.707, 0, 0, 0.707]),
+        init_state=AssetBaseCfg.InitialStateCfg(pos=[0, 0, -1.1], rot=[0.707, 0, 0, 0.707]),
         spawn=UsdFileCfg(
             usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/KitchenTable/KitchenTable.usd",
             scale=(0.02, 0.02, 0.013),
