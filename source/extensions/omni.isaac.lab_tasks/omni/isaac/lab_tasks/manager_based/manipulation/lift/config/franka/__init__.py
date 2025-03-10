@@ -139,7 +139,7 @@ gym.register(
     id="Isaac-Lift-Cube-Franka-Stack-IK-Rel-v0",
     entry_point="omni.isaac.lab.envs:ManagerBasedRLEnv",
     kwargs={
-        "env_cfg_entry_point": f"{__name__}.ik_rel_env_copy_cfg:FrankaCubeLiftStackEnvCfg",
+        "env_cfg_entry_point": f"{__name__}.ik_rel_env_copy_cfg:FrankaCubeLiftStackIKEnvCfg_PLAY",
         "robomimic_bc_cfg_entry_point": os.path.join(agents.__path__[0], "robomimic/bc.json"),
     },
     disable_env_checker=True,
