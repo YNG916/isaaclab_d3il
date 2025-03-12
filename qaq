@@ -35,4 +35,10 @@ source/standalone/environments/random_agent.py
 
 ./isaaclab.sh -p source/standalone/tools/record_demos.py --task Isaac-Lift-Cube-Franka-IK-Rel-v0 --teleop_device keyboard --dataset_file ./datasets/lift2.hdf5
 
+---------------
+git add .
+git commit -m "record"
+git push origin main
+
+
 

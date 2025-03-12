@@ -47,7 +47,7 @@ class Se3Gamepad(DeviceBase):
 
     """
 
-    def __init__(self, pos_sensitivity: float = 1.0, rot_sensitivity: float = 1.6, dead_zone: float = 0.01):
+    def __init__(self, pos_sensitivity: float = 1.0, rot_sensitivity: float = 1.6, dead_zone: float = 0.17):
         """Initialize the gamepad layer.
 
         Args:

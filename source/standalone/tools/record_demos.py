@@ -51,7 +51,7 @@ import os
 import time
 import torch
 
-from omni.isaac.lab.devices import Se3Keyboard, Se3SpaceMouse
+from omni.isaac.lab.devices import Se3Keyboard, Se3SpaceMouse, Se3Gamepad
 from omni.isaac.lab.envs.mdp.recorders.recorders_cfg import ActionStateRecorderManagerCfg
 
 import omni.isaac.lab_tasks  # noqa: F401
@@ -133,11 +133,14 @@ def main():
 
     # create controller
     if args_cli.teleop_device.lower() == "keyboard":
-        teleop_interface = Se3Keyboard(pos_sensitivity=0.2, rot_sensitivity=0.5)
+        teleop_interface = Se3Keyboard(pos_sensitivity=0.1, rot_sensitivity=0.3)
     elif args_cli.teleop_device.lower() == "spacemouse":
         teleop_interface = Se3SpaceMouse(pos_sensitivity=0.2, rot_sensitivity=0.5)
+    elif args_cli.teleop_device.lower() == "gamepad":
+        teleop_interface = Se3Gamepad(pos_sensitivity=0.05, rot_sensitivity=0.1)
+        # teleop_interface.add_callback("R1", reset_recording_instance)
     else:
-        raise ValueError(f"Invalid device interface '{args_cli.teleop_device}'. Supported: 'keyboard', 'spacemouse'.")
+        raise ValueError(f"Invalid device interface '{args_cli.teleop_device}'. Supported: 'keyboard', 'spacemouse', 'gamepad'")
 
     # add teleoperation key for reset current recording instance
     should_reset_recording_instance = False

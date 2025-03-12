@@ -136,7 +136,7 @@ gym.register(
 )
 
 gym.register(
-    id="Isaac-Lift-Cube-Franka-Stack-IK-Rel-v0",
+    id="Isaac-Stack-Franka-IK-Rel-v0",
     entry_point="omni.isaac.lab.envs:ManagerBasedRLEnv",
     kwargs={
         "env_cfg_entry_point": f"{__name__}.ik_rel_env_copy_cfg:FrankaCubeLiftStackIKEnvCfg_PLAY",
