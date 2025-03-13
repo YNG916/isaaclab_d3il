@@ -11,3 +11,4 @@ from .observations import *  # noqa: F401, F403
 from .rewards import *  # noqa: F401, F403
 from .terminations import *  # noqa: F401, F403
 from .terminations_stack import * # success of stack: cubes_stacked
+from .terminations_sorting import * # success of sorting: cubes_sorted

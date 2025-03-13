@@ -186,11 +186,12 @@ class RewardsCfg:
 class TerminationsCfg:
     """Termination terms for the MDP."""
 
-    time_out = DoneTerm(func=mdp.time_out, time_out=True)
+    # time_out = DoneTerm(func=mdp.time_out, time_out=True)
 
     object_dropping = DoneTerm(
-        func=mdp.root_height_below_minimum, params={"minimum_height": -0.05, "asset_cfg": SceneEntityCfg("object")}
-    )
+        func=mdp.root_height_below_minimum, params={"minimum_height": -0.05, "asset_cfg": SceneEntityCfg("object")})
+    
+    success = DoneTerm(func=mdp.cubes_sorted)
 
 
 @configclass
@@ -215,8 +216,34 @@ class CurriculumCfg:
 class SortingBasicEnvCfg(ManagerBasedRLEnvCfg):
     """Configuration for the lifting environment."""
 
+    # # Scene settings
+    # scene: ObjectTableSceneCfg = ObjectTableSceneCfg(num_envs=4096, env_spacing=2.5)
+    # # Basic settings
+    # observations: ObservationsCfg = ObservationsCfg()
+    # actions: ActionsCfg = ActionsCfg()
+    # commands: CommandsCfg = CommandsCfg()
+    # # MDP settings
+    # rewards: RewardsCfg = RewardsCfg()
+    # terminations: TerminationsCfg = TerminationsCfg()
+    # events: EventCfg = EventCfg()
+    # curriculum: CurriculumCfg = CurriculumCfg()
+
+    # def __post_init__(self):
+    #     """Post initialization."""
+    #     # general settings
+    #     self.decimation = 2
+    #     self.episode_length_s = 5.0
+    #     # simulation settings
+    #     self.sim.dt = 0.01  # 100Hz
+    #     self.sim.render_interval = self.decimation
+
+    #     self.sim.physx.bounce_threshold_velocity = 0.2
+    #     self.sim.physx.bounce_threshold_velocity = 0.01
+    #     self.sim.physx.gpu_found_lost_aggregate_pairs_capacity = 1024 * 1024 * 4
+    #     self.sim.physx.gpu_total_aggregate_pairs_capacity = 16 * 1024
+    #     self.sim.physx.friction_correlation_distance = 0.00625
     # Scene settings
-    scene: ObjectTableSceneCfg = ObjectTableSceneCfg(num_envs=4096, env_spacing=2.5)
+    scene: ObjectTableSceneCfg = ObjectTableSceneCfg(num_envs=4096, env_spacing=2.5, replicate_physics=False)
     # Basic settings
     observations: ObservationsCfg = ObservationsCfg()
     actions: ActionsCfg = ActionsCfg()
@@ -227,11 +254,12 @@ class SortingBasicEnvCfg(ManagerBasedRLEnvCfg):
     events: EventCfg = EventCfg()
     curriculum: CurriculumCfg = CurriculumCfg()
 
+
     def __post_init__(self):
         """Post initialization."""
         # general settings
-        self.decimation = 2
-        self.episode_length_s = 5.0
+        self.decimation = 5
+        self.episode_length_s = 30.0
         # simulation settings
         self.sim.dt = 0.01  # 100Hz
         self.sim.render_interval = self.decimation

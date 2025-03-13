@@ -126,7 +126,7 @@ class FrankaSortingBasicEnvCfg(SortingBasicEnvCfg):
             prim_path="{ENV_REGEX_NS}/Object6",
             init_state=RigidObjectCfg.InitialStateCfg(pos=[0.2, 0.1, 0.055], rot=[1, 0, 0, 0]),
             spawn=UsdFileCfg(
-                usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Blocks/red_block.usd",
+                usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Blocks/blue_block.usd",
                 scale=(0.8, 0.8, 0.8),
                 rigid_props=cube_properties
             ),
@@ -186,7 +186,7 @@ class FrankaSortingBasicEnvCfg(SortingBasicEnvCfg):
             prim_path="{ENV_REGEX_NS}/Object12",
             init_state=RigidObjectCfg.InitialStateCfg(pos=[0.4, 0.1, 0.055], rot=[1, 0, 0, 0]),
             spawn=UsdFileCfg(
-                usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Blocks/blue_block.usd",
+                usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Blocks/red_block.usd",
                 scale=(0.8, 0.8, 0.8),
                 rigid_props=cube_properties
             ),
