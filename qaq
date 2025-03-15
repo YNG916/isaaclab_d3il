@@ -28,7 +28,7 @@ SimulationApp=SimulationApp()
 要注册一个环境，我们使用 gymnasium.register() 方法。此方法接收环境名称、环境类的入口点以及环境配置类的入口点。
 
 source/standalone/environments/random_agent.py
-./isaaclab.sh -p source/standalone/environments/random_agent.py --task Isaac-Stack-Cube-TwoFranka-v0 --num_envs 1
+./isaaclab.sh -p source/standalone/environments/random_agent.py --task Isaac-Parallel-Franka-v0 --num_envs 1
 
 --------------------
 ./isaaclab.sh -p source/standalone/tools/replay_demos.py --task Isaac-Lift-Cube-Franka-IK-Rel-v0 --dataset_file ./datasets/lift2.hdf5
@@ -39,6 +39,7 @@ source/standalone/environments/random_agent.py
 git add .
 git commit -m "record"
 git push origin main
-
+------
+git pull origin main 
 
 

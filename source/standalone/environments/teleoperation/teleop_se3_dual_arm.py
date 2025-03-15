@@ -87,8 +87,8 @@ def main():
     # 左侧机械臂使用键盘控制，右侧机械臂使用 gamepad 控制
     if args_cli.dual_arm:
         teleop_interface_left = Se3Keyboard(
-            pos_sensitivity=0.05 * args_cli.sensitivity,
-            rot_sensitivity=0.05 * args_cli.sensitivity
+            pos_sensitivity=0.1 * args_cli.sensitivity,
+            rot_sensitivity=0.1 * args_cli.sensitivity
         )
         teleop_interface_right = Se3Gamepad(
             pos_sensitivity=0.1 * args_cli.sensitivity,
@@ -141,7 +141,18 @@ def main():
                 actions_left = pre_process_actions(delta_pose_left, gripper_command_left)
                 actions_right = pre_process_actions(delta_pose_right, gripper_command_right)
                 # 环境动作空间要求两个机械臂动作拼接为一个向量，例如 [arm1, arm2]
-                actions = torch.concat([actions_left, actions_right], dim=1)
+                # actions = torch.concat([actions_left, actions_right], dim=1)
+                # 假设每个 arm 的 delta pose 维度为 n，则:
+                n = actions_left.shape[1] - 1  # 提取 delta pose 的维度
+
+                # 分别提取左右臂的 delta pose 和 gripper 命令
+                left_delta = actions_left[:, :n]
+                left_gripper = actions_left[:, n:]
+                right_delta = actions_right[:, :n]
+                right_gripper = actions_right[:, n:]
+
+                # 按照要求，先拼接两个臂的 delta pose，再拼接两个臂的 gripper 命令
+                actions = torch.concat([left_delta, right_delta, left_gripper, right_gripper], dim=1)
             else:
                 delta_pose, gripper_command = teleop_interface.advance()
                 delta_pose = torch.tensor(delta_pose.astype("float32"), device=env.device).repeat(env.num_envs, 1)
