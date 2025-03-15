@@ -1,21 +1,11 @@
-from omni.isaac.lab.sim import sim as sim_utils
-from omni.isaac.lab.assets import RigidObjectCfg
-from omni.isaac.lab.assets import ArticulationCfg
-from omni.isaac.lab.sensors import FrameTransformerCfg
-from omni.isaac.lab.sensors.frame_transformer.frame_transformer_cfg import OffsetCfg
-from omni.isaac.lab.sim.schemas.schemas_cfg import RigidBodyPropertiesCfg
-from omni.isaac.lab.sim.spawners.from_files.from_files_cfg import UsdFileCfg
 from omni.isaac.lab.utils import configclass
-from omni.isaac.lab.utils.assets import ISAAC_NUCLEUS_DIR
-
-from omni.isaac.lab_tasks.manager_based.manipulation.lift import mdp
-from omni.isaac.lab_tasks.manager_based.manipulation.lift.parallel_basic_cfg import ParallelEnvCfg
+from . import parallel_env
 
 ##
 # Pre-defined configs
 ##
-from omni.isaac.lab.markers.config import FRAME_MARKER_CFG  # isort: skip
-from omni.isaac.lab_assets.franka import FRANKA_PANDA_CFG, FRANKA_PANDA_HIGH_PD_CFG  # isort: skip
+from omni.isaac.lab_assets.franka import FRANKA_PANDA_HIGH_PD_CFG  # isort: skip
+from omni.isaac.lab.assets import ArticulationCfg
 
 # 为 IK 控制导入相关配置
 from omni.isaac.lab.controllers.differential_ik_cfg import DifferentialIKControllerCfg
@@ -23,7 +13,7 @@ from omni.isaac.lab.envs.mdp.actions.actions_cfg import DifferentialInverseKinem
 
 
 @configclass
-class ParallelDualFrankaIKEnvCfg(ParallelEnvCfg):
+class ParallelFrankaIKEnvCfg(parallel_env.ParallelFrankaEnvCfg):
     def __post_init__(self):
         # 调用父类后初始化其他配置
         super().__post_init__()
@@ -89,7 +79,7 @@ class ParallelDualFrankaIKEnvCfg(ParallelEnvCfg):
 
 
 @configclass
-class ParallelDualFrankaIKEnvCfg_PLAY(ParallelDualFrankaIKEnvCfg):
+class ParallelFrankaIKEnvCfg_PLAY(ParallelFrankaIKEnvCfg):
     def __post_init__(self):
         super().__post_init__()
         # 设置较小的环境用于演示

@@ -9,7 +9,7 @@ using keyboard for one manipulator and gamepad for the other."""
 import argparse
 import os
 
-from isaaclab.app import AppLauncher
+from omni.isaac.lab.app import AppLauncher
 
 # 添加命令行参数
 parser = argparse.ArgumentParser(
@@ -30,12 +30,12 @@ AppLauncher.add_app_launcher_args(parser)
 # 解析参数
 args_cli = parser.parse_args()
 
-app_launcher_args = vars(args_cli)
-# 当手部跟踪设备使用时，指定体验
-if args_cli.teleop_device.lower() == "handtracking":
-    app_launcher_args["experience"] = f'{os.environ["ISAACLAB_PATH"]}/apps/isaaclab.python.xr.openxr.kit'
+# app_launcher_args = vars(args_cli)
+# # 当手部跟踪设备使用时，指定体验
+# if args_cli.teleop_device.lower() == "handtracking":
+#     app_launcher_args["experience"] = f'{os.environ["ISAACLAB_PATH"]}/apps/isaaclab.python.xr.openxr.kit'
 # 启动 Omniverse 应用
-app_launcher = AppLauncher(app_launcher_args)
+app_launcher = AppLauncher(headless=args_cli.headless)
 simulation_app = app_launcher.app
 
 import gymnasium as gym
@@ -43,14 +43,14 @@ import torch
 
 import omni.log
 
-from isaaclab.devices import Se3Gamepad, Se3Keyboard, Se3HandTracking, Se3SpaceMouse
-from isaaclab.envs import ViewerCfg
-from isaaclab.envs.ui import ViewportCameraController
-from isaaclab.managers import TerminationTermCfg as DoneTerm
+from omni.isaac.lab.devices import Se3Gamepad, Se3Keyboard, Se3SpaceMouse
+from omni.isaac.lab.managers import TerminationTermCfg as DoneTerm
 
-import isaaclab_tasks  # noqa: F401
-from isaaclab_tasks.manager_based.manipulation.lift import mdp
-from isaaclab_tasks.utils import parse_env_cfg
+
+# import isaaclab_tasks  # noqa: F401
+import omni.isaac.lab_tasks
+from omni.isaac.lab_tasks.manager_based.manipulation.lift import mdp
+from omni.isaac.lab_tasks.utils import parse_env_cfg
 
 
 def pre_process_actions(delta_pose: torch.Tensor, gripper_command: bool) -> torch.Tensor:
@@ -93,7 +93,6 @@ def main():
         teleop_interface_right = Se3Gamepad(
             pos_sensitivity=0.1 * args_cli.sensitivity,
             rot_sensitivity=0.1 * args_cli.sensitivity,
-            gamepad_index=0  # 使用默认的 gamepad 设备
         )
     else:
         # 单臂控制模式（按需使用）
@@ -155,8 +154,9 @@ def main():
                 should_reset_recording_instance = False
 
     env.close()
-    simulation_app.close()
+    
 
 
 if __name__ == "__main__":
     main()
+    simulation_app.close()
