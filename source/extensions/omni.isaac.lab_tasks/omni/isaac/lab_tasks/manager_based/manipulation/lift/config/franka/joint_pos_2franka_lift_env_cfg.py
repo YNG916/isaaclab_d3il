@@ -33,7 +33,7 @@ class TwoFrankaCubeEnvCfg(TwoFrankaEnvCfg):
         self.scene.robot = FRANKA_PANDA_CFG.replace(
             prim_path="{ENV_REGEX_NS}/Robot",
             init_state=ArticulationCfg.InitialStateCfg(
-                pos=(-0.9, 0.0, 0.0),  # Set different initial position
+                pos=(-0.7, 0.0, 0.0),  # Set different initial position
                 rot=(1.0, 0.0, 0.0, 0.0),  # Identity rotatio
                 joint_pos={
                     "panda_joint1": 0.0,
@@ -50,7 +50,7 @@ class TwoFrankaCubeEnvCfg(TwoFrankaEnvCfg):
         self.scene.robot_1 = FRANKA_PANDA_CFG.replace(
             prim_path="{ENV_REGEX_NS}/Robot_1",
             init_state=ArticulationCfg.InitialStateCfg(
-                pos=(0.9, 0.0, 0.0),  # Set different initial position
+                pos=(0.8, 0.0, 0.0),  # Set different initial position
                 rot=(0.0, 0.0, 0.0, 1.0),  # Identity rotation
                 joint_pos={
                     "panda_joint1": 0.0,
@@ -129,36 +129,36 @@ class TwoFrankaCubeEnvCfg(TwoFrankaEnvCfg):
 
         self.scene.object = RigidObjectCfg(
             prim_path="{ENV_REGEX_NS}/Object",
-            init_state=RigidObjectCfg.InitialStateCfg(pos=[-0.3, 0.0, 0], rot=[1, 0, 0, 0]),
+            init_state=RigidObjectCfg.InitialStateCfg(pos=[-0.4, 0.0, 0], rot=[1, 0, 0, 0]),
             spawn=UsdFileCfg(
-                usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/ShellSmall/ShellSmall.usd",
+                usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/SaltShaker/SaltShaker.usd",
                 rigid_props=cube_properties,
                 collision_props=sim_utils.CollisionPropertiesCfg(
                     collision_enabled=True,)
             ),
         )
 
-        self.scene.object1 = RigidObjectCfg(
-            prim_path="{ENV_REGEX_NS}/Object1",
-            init_state=RigidObjectCfg.InitialStateCfg(pos=[-0.2, 0.0, 0], rot=[1, 0, 0, 0]),
-            spawn=UsdFileCfg(
-                usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/ShellLarge/ShellLarge.usd",
-                rigid_props=cube_properties,
-                collision_props=sim_utils.CollisionPropertiesCfg(
-                    collision_enabled=True,)
-            ),
-        )
-
-        # self.scene.object2 = RigidObjectCfg(
-        #     prim_path="{ENV_REGEX_NS}/Object2",
-        #     init_state=RigidObjectCfg.InitialStateCfg(pos=[0.3, 0.00, 0.0], rot=[1, 0, 0, 0]),
+        # self.scene.object1 = RigidObjectCfg(
+        #     prim_path="{ENV_REGEX_NS}/Object1",
+        #     init_state=RigidObjectCfg.InitialStateCfg(pos=[-0.2, 0.0, 0], rot=[1, 0, 0, 0]),
         #     spawn=UsdFileCfg(
-        #         usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/BottleB/BottleB.usd",
+        #         usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/ShellLarge/ShellLarge.usd",
         #         rigid_props=cube_properties,
         #         collision_props=sim_utils.CollisionPropertiesCfg(
         #             collision_enabled=True,)
         #     ),
         # )
+
+        self.scene.object1 = RigidObjectCfg(
+            prim_path="{ENV_REGEX_NS}/Object1",
+            init_state=RigidObjectCfg.InitialStateCfg(pos=[-0.2, 0.0, 0.0], rot=[1, 0, 0, 0]),
+            spawn=UsdFileCfg(
+                usd_path=f"/home/i53/student/jdu/Downloads/Kitchen_set/assets/BottleB/BottleB.usd",
+                rigid_props=cube_properties,
+                collision_props=sim_utils.CollisionPropertiesCfg(
+                    collision_enabled=True,)
+            ),
+        )
 
         self.scene.box_1 = RigidObjectCfg(
                 prim_path="{ENV_REGEX_NS}/Box",

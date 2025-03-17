@@ -37,7 +37,7 @@ source/standalone/environments/random_agent.py
 
 ---------------
 git add .
-git commit -m "record"
+git commit -m "dual_arm_teleoperation_final"
 git push origin main
 ------
 git pull origin main 
